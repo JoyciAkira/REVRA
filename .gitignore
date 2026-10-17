@@ -1,0 +1,25 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.omc/state/
+coverage/
+.DS_Store
+# Niente artifact compilati dentro src: rompono la risoluzione .js→.ts di vite
+packages/*/src/**/*.js
+packages/*/src/**/*.js.map
+packages/*/src/**/*.d.ts
+.mcp.json
+.agentsroom/handoff-transcript-*.txt
+.agentsroom/
+.freebuff/
+.omp/
+.claude/
+.env
+
+.agentsroom/handoff-summary-*.md
+.agentsroom/fork-context-*.txt
+.revra-verify/
+.revra-verify/
+engine/cache/
+__pycache__/
+*.pyc

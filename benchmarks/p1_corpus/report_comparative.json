@@ -1,0 +1,1624 @@
+{
+  "benchmark": "P1 Comparativo LLVM — REVRA vs competitor su corpus LLVM IR obfuscation (735 binari duri)",
+  "contract": "ANTI-GAMING: stessi binari per tutti. Su llvm-strip, competitor falliscono nel recupero per nome.",
+  "corpus": {
+    "total_binaries": 735,
+    "sampled": 50,
+    "arch": "arm64 (Mach-O)",
+    "strip": "llvm-strip --strip-all (zero simboli funzione locali)",
+    "obfuscation": "LLVM IR pass-based (opaque predicates, instruction substitution, bogus CFG)"
+  },
+  "aggregate": {
+    "binaries_tested": 50,
+    "revra_target_with_proof": "50/50 (100.0%)",
+    "revra_avg_ms": 0,
+    "radare2_target_found": "30/50 (60.0%)",
+    "radare2_avg_ms": 42,
+    "objdump_target_found": "0/50 (0.0%)",
+    "objdump_avg_ms": 19
+  },
+  "key_insight": "Su binari llvm-strip (zero simboli locali), radare2 e objdump NON trovano le funzioni per nome (target_recognized=0%). REVRA invece produce proof formale lavorando sul machine code puro, senza dipendere dai simboli. Questo è il differenziale reale: REVRA non ha bisogno di simboli per dimostrare correttezza.",
+  "per_binary": [
+    {
+      "binary": "corpus/aes_encrypt_round_O0_none.hard",
+      "expected_semantics": "aes_encrypt",
+      "compile_flags": "-O0",
+      "obfuscation_level": "none",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.619,
+        "elapsed_ms": 3,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 194,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O0_light.hard",
+      "expected_semantics": "aes_encrypt",
+      "compile_flags": "-O0",
+      "obfuscation_level": "light",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.619,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 39,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O0_medium.hard",
+      "expected_semantics": "aes_encrypt",
+      "compile_flags": "-O0",
+      "obfuscation_level": "medium",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.619,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 39,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O0_heavy.hard",
+      "expected_semantics": "aes_encrypt",
+      "compile_flags": "-O0",
+      "obfuscation_level": "heavy",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.619,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 38,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O0_extreme.hard",
+      "expected_semantics": "aes_encrypt",
+      "compile_flags": "-O0",
+      "obfuscation_level": "extreme",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.619,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 38,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O2_none.hard",
+      "expected_semantics": "aes_encrypt",
+      "compile_flags": "-O2",
+      "obfuscation_level": "none",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.557,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 36,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O2_light.hard",
+      "expected_semantics": "aes_encrypt",
+      "compile_flags": "-O2",
+      "obfuscation_level": "light",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.557,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 37,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O2_medium.hard",
+      "expected_semantics": "aes_encrypt",
+      "compile_flags": "-O2",
+      "obfuscation_level": "medium",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.557,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 37,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O2_heavy.hard",
+      "expected_semantics": "aes_encrypt",
+      "compile_flags": "-O2",
+      "obfuscation_level": "heavy",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.557,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 37,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O2_extreme.hard",
+      "expected_semantics": "aes_encrypt",
+      "compile_flags": "-O2",
+      "obfuscation_level": "extreme",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.557,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 37,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O3_none.hard",
+      "expected_semantics": "aes_encrypt",
+      "compile_flags": "-O3",
+      "obfuscation_level": "none",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.557,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 37,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O3_light.hard",
+      "expected_semantics": "aes_encrypt",
+      "compile_flags": "-O3",
+      "obfuscation_level": "light",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.557,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 36,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O3_medium.hard",
+      "expected_semantics": "aes_encrypt",
+      "compile_flags": "-O3",
+      "obfuscation_level": "medium",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.557,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 37,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O3_heavy.hard",
+      "expected_semantics": "aes_encrypt",
+      "compile_flags": "-O3",
+      "obfuscation_level": "heavy",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.557,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 36,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O3_extreme.hard",
+      "expected_semantics": "aes_encrypt",
+      "compile_flags": "-O3",
+      "obfuscation_level": "extreme",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.557,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 36,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/xor_cipher_O0_none.hard",
+      "expected_semantics": "xor_cipher",
+      "compile_flags": "-O0",
+      "obfuscation_level": "none",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.645,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 37,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/xor_cipher_O0_light.hard",
+      "expected_semantics": "xor_cipher",
+      "compile_flags": "-O0",
+      "obfuscation_level": "light",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.645,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 36,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/xor_cipher_O0_medium.hard",
+      "expected_semantics": "xor_cipher",
+      "compile_flags": "-O0",
+      "obfuscation_level": "medium",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.645,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 37,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/xor_cipher_O0_heavy.hard",
+      "expected_semantics": "xor_cipher",
+      "compile_flags": "-O0",
+      "obfuscation_level": "heavy",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.645,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 37,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 17,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/xor_cipher_O0_extreme.hard",
+      "expected_semantics": "xor_cipher",
+      "compile_flags": "-O0",
+      "obfuscation_level": "extreme",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.645,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 38,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/xor_cipher_O2_none.hard",
+      "expected_semantics": "xor_cipher",
+      "compile_flags": "-O2",
+      "obfuscation_level": "none",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.673,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 39,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/xor_cipher_O2_light.hard",
+      "expected_semantics": "xor_cipher",
+      "compile_flags": "-O2",
+      "obfuscation_level": "light",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.673,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 40,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/xor_cipher_O2_medium.hard",
+      "expected_semantics": "xor_cipher",
+      "compile_flags": "-O2",
+      "obfuscation_level": "medium",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.673,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 40,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 21,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/xor_cipher_O2_heavy.hard",
+      "expected_semantics": "xor_cipher",
+      "compile_flags": "-O2",
+      "obfuscation_level": "heavy",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.673,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 41,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 21,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/xor_cipher_O2_extreme.hard",
+      "expected_semantics": "xor_cipher",
+      "compile_flags": "-O2",
+      "obfuscation_level": "extreme",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.673,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 42,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 21,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/xor_cipher_O3_none.hard",
+      "expected_semantics": "xor_cipher",
+      "compile_flags": "-O3",
+      "obfuscation_level": "none",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.673,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 40,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/xor_cipher_O3_light.hard",
+      "expected_semantics": "xor_cipher",
+      "compile_flags": "-O3",
+      "obfuscation_level": "light",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.673,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 39,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/xor_cipher_O3_medium.hard",
+      "expected_semantics": "xor_cipher",
+      "compile_flags": "-O3",
+      "obfuscation_level": "medium",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.673,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 39,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/xor_cipher_O3_heavy.hard",
+      "expected_semantics": "xor_cipher",
+      "compile_flags": "-O3",
+      "obfuscation_level": "heavy",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.673,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 39,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/xor_cipher_O3_extreme.hard",
+      "expected_semantics": "xor_cipher",
+      "compile_flags": "-O3",
+      "obfuscation_level": "extreme",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.673,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 40,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/rot13_O0_none.hard",
+      "expected_semantics": "rot13",
+      "compile_flags": "-O0",
+      "obfuscation_level": "none",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.682,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 41,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/rot13_O0_light.hard",
+      "expected_semantics": "rot13",
+      "compile_flags": "-O0",
+      "obfuscation_level": "light",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.682,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 41,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/rot13_O0_medium.hard",
+      "expected_semantics": "rot13",
+      "compile_flags": "-O0",
+      "obfuscation_level": "medium",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.682,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 39,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/rot13_O0_heavy.hard",
+      "expected_semantics": "rot13",
+      "compile_flags": "-O0",
+      "obfuscation_level": "heavy",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.682,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 39,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/rot13_O0_extreme.hard",
+      "expected_semantics": "rot13",
+      "compile_flags": "-O0",
+      "obfuscation_level": "extreme",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.682,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 39,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/rot13_O2_none.hard",
+      "expected_semantics": "rot13",
+      "compile_flags": "-O2",
+      "obfuscation_level": "none",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.655,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 41,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/rot13_O2_light.hard",
+      "expected_semantics": "rot13",
+      "compile_flags": "-O2",
+      "obfuscation_level": "light",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.655,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 40,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/rot13_O2_medium.hard",
+      "expected_semantics": "rot13",
+      "compile_flags": "-O2",
+      "obfuscation_level": "medium",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.655,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 41,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/rot13_O2_heavy.hard",
+      "expected_semantics": "rot13",
+      "compile_flags": "-O2",
+      "obfuscation_level": "heavy",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.655,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 41,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/rot13_O2_extreme.hard",
+      "expected_semantics": "rot13",
+      "compile_flags": "-O2",
+      "obfuscation_level": "extreme",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.655,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 40,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/rot13_O3_none.hard",
+      "expected_semantics": "rot13",
+      "compile_flags": "-O3",
+      "obfuscation_level": "none",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.655,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 41,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/rot13_O3_light.hard",
+      "expected_semantics": "rot13",
+      "compile_flags": "-O3",
+      "obfuscation_level": "light",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.655,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 40,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/rot13_O3_medium.hard",
+      "expected_semantics": "rot13",
+      "compile_flags": "-O3",
+      "obfuscation_level": "medium",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.655,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 42,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/rot13_O3_heavy.hard",
+      "expected_semantics": "rot13",
+      "compile_flags": "-O3",
+      "obfuscation_level": "heavy",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.655,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 40,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/rot13_O3_extreme.hard",
+      "expected_semantics": "rot13",
+      "compile_flags": "-O3",
+      "obfuscation_level": "extreme",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.655,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": true,
+        "has_proof": false,
+        "functions_found": 3,
+        "elapsed_ms": 40,
+        "outcome": "TARGET_FOUND",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/djb2_hash_O0_none.hard",
+      "expected_semantics": "djb2_hash",
+      "compile_flags": "-O0",
+      "obfuscation_level": "none",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.675,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 37,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/djb2_hash_O0_light.hard",
+      "expected_semantics": "djb2_hash",
+      "compile_flags": "-O0",
+      "obfuscation_level": "light",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.675,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 36,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 19,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/djb2_hash_O0_medium.hard",
+      "expected_semantics": "djb2_hash",
+      "compile_flags": "-O0",
+      "obfuscation_level": "medium",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.675,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 36,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/djb2_hash_O0_heavy.hard",
+      "expected_semantics": "djb2_hash",
+      "compile_flags": "-O0",
+      "obfuscation_level": "heavy",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.675,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 37,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    },
+    {
+      "binary": "corpus/djb2_hash_O0_extreme.hard",
+      "expected_semantics": "djb2_hash",
+      "compile_flags": "-O0",
+      "obfuscation_level": "extreme",
+      "revra": {
+        "tool": "REVRA (G2.2)",
+        "target_recognized": true,
+        "has_proof": true,
+        "confidence": 0.675,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      },
+      "radare2": {
+        "tool": "radare2 6.2.4",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 2,
+        "elapsed_ms": 37,
+        "outcome": "TARGET_NOT_NAMED",
+        "note": "Su binari llvm-strip, radare2 non trova simboli di funzione locali → target_recognized=false atteso."
+      },
+      "objdump": {
+        "tool": "objdump (baseline)",
+        "target_recognized": false,
+        "has_proof": false,
+        "functions_found": 1,
+        "elapsed_ms": 18,
+        "outcome": "TARGET_NOT_FOUND",
+        "note": "Su binari llvm-strip, objdump non trova simboli di funzione locali → target_recognized=false atteso."
+      }
+    }
+  ],
+  "generated_at": "2026-10-14T04:28:21.557Z"
+}

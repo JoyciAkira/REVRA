@@ -1,0 +1,1 @@
+export const SOVEREIGN_SERVICE = Symbol('SOVEREIGN_SERVICE');

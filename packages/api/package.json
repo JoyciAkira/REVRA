@@ -1,0 +1,35 @@
+{
+  "name": "@revra/api",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./dist/main.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/main.js",
+    "start:dev": "pnpm -r build && tsx watch src/main.ts",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.10",
+    "@nestjs/core": "^11.0.10",
+    "@nestjs/platform-express": "^11.0.10",
+    "@revra/contracts": "workspace:*",
+    "@revra/engine": "workspace:*",
+    "@revra/kernel": "workspace:*",
+    "express": "^5.0.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "^11.0.10",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.5",
+    "@types/supertest": "^6.0.2",
+    "supertest": "^7.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^3.0.5"
+  }
+}

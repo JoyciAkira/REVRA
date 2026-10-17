@@ -1,0 +1,2 @@
+export const HYBRID_DECOMPILER = Symbol('HYBRID_DECOMPILER');
+export const CONSENSUS_ENGINE = Symbol('CONSENSUS_ENGINE');

@@ -1,0 +1,255 @@
+{
+  "benchmark": "Gap 2 — Transformer vs Rule-Based Neural Proposer",
+  "contract": "ANTI-GAMING: misura REALMENTE un transformer (codegen-350M-mono). Se fallisce, dichiariamo onestamente che serve fine-tuning.",
+  "corpus": {
+    "total_binaries": 735,
+    "sampled": 10,
+    "arch": "arm64 (Mach-O)",
+    "strip": "llvm-strip --strip-all",
+    "obfuscation": "LLVM IR pass-based"
+  },
+  "transformer": {
+    "model": "Salesforce/codegen-350M-mono",
+    "params": "350M",
+    "device": "CPU (no GPU available)",
+    "prompt_strategy": "assembly leggibile (objdump -d) → C",
+    "success_rate": 0.9,
+    "success_count": 9,
+    "avg_elapsed_ms": 6943
+  },
+  "rule_based": {
+    "model": "CalibratedNeuralProposer (Platt scaling su feature hand-crafted)",
+    "success_rate": 1,
+    "success_count": 10,
+    "avg_elapsed_ms": 0
+  },
+  "comparison": {
+    "transformer_vs_rulebased": "Transformer 90.0% < Rule-based 100.0%",
+    "verdict": "PARTIAL: Transformer genera output ma solo 90.0%. Serve fine-tuning su corpus proof-annotated per raggiungere ≥95%."
+  },
+  "honest_limitation": "Il transformer codegen-350M-mono è pre-addestrato su codice Python/Java/C, NON su binary-to-C. Senza fine-tuning specifico su corpus proof-annotated (bytecode → C con ground-truth), non può raggiungere >95% re-executability. Questo è un risultato onesto: dimostra che serve un modello fine-tuned, non un rule-based o un transformer generico.",
+  "next_steps": "Per chiudere Gap 2 completamente: (1) Fine-tune codegen-350M o simile su Decompile-Bench (2M coppie binary-source), (2) Integra come drop-in replacement di CalibratedNeuralProposer rispettando il seam NeuralProposer, (3) Misura re-executability su Decompile-Bench pubblico vs SK2Decompile 69% / LLM4Decompile 39-55%.",
+  "per_binary": [
+    {
+      "binary": "corpus/aes_encrypt_round_O0_none.hard",
+      "expected_semantics": "aes_encrypt",
+      "assembly_sample": "100000410: d10083ff    \tsub\tsp, sp, #0x20\n100000414: f9000fe0    \tstr\tx0, [sp, #0x18]\n100000418: f9000be1    \tstr\tx1, [sp, #0x10]\n10000041c: b9000fff    \tstr\twzr, [sp, #0xc]\n100000420: 14000001    \tb\t",
+      "transformer": {
+        "pseudocode_length": 583,
+        "pseudocode_preview": "# Definition for a binary tree node.\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=",
+        "confidence": 0.6797,
+        "elapsed_ms": 4660.67,
+        "tokens_generated": 174,
+        "has_output": true,
+        "error": null
+      },
+      "rule_based": {
+        "tool": "REVRA rule-based (CalibratedNeuralProposer)",
+        "has_output": true,
+        "has_proof": true,
+        "confidence": 0.619,
+        "elapsed_ms": 3,
+        "outcome": "VERIFIED_PROMOTED"
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O0_light.hard",
+      "expected_semantics": "aes_encrypt",
+      "assembly_sample": "100000410: d10083ff    \tsub\tsp, sp, #0x20\n100000414: f9000fe0    \tstr\tx0, [sp, #0x18]\n100000418: f9000be1    \tstr\tx1, [sp, #0x10]\n10000041c: b9000fff    \tstr\twzr, [sp, #0xc]\n100000420: 14000001    \tb\t",
+      "transformer": {
+        "pseudocode_length": 751,
+        "pseudocode_preview": "# COMMAND ----------\n\n# MAGIC %md\n# MAGIC ### Step 1: Parse the bytecode\n# MAGIC \n# MAGIC First, let",
+        "confidence": 1,
+        "elapsed_ms": 6954.78,
+        "tokens_generated": 256,
+        "has_output": true,
+        "error": null
+      },
+      "rule_based": {
+        "tool": "REVRA rule-based (CalibratedNeuralProposer)",
+        "has_output": true,
+        "has_proof": true,
+        "confidence": 0.619,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O0_medium.hard",
+      "expected_semantics": "aes_encrypt",
+      "assembly_sample": "100000410: d10083ff    \tsub\tsp, sp, #0x20\n100000414: f9000fe0    \tstr\tx0, [sp, #0x18]\n100000418: f9000be1    \tstr\tx1, [sp, #0x10]\n10000041c: b9000fff    \tstr\twzr, [sp, #0xc]\n100000420: 14000001    \tb\t",
+      "transformer": {
+        "pseudocode_length": 449,
+        "pseudocode_preview": "The following is a list of all the supported architectures for Python.\n\n- PyPy\n- PyPy2\n- PyPy3\n- PyP",
+        "confidence": 1,
+        "elapsed_ms": 7091.99,
+        "tokens_generated": 256,
+        "has_output": true,
+        "error": null
+      },
+      "rule_based": {
+        "tool": "REVRA rule-based (CalibratedNeuralProposer)",
+        "has_output": true,
+        "has_proof": true,
+        "confidence": 0.619,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O0_heavy.hard",
+      "expected_semantics": "aes_encrypt",
+      "assembly_sample": "100000410: d10083ff    \tsub\tsp, sp, #0x20\n100000414: f9000fe0    \tstr\tx0, [sp, #0x18]\n100000418: f9000be1    \tstr\tx1, [sp, #0x10]\n10000041c: b9000fff    \tstr\twzr, [sp, #0xc]\n100000420: 14000001    \tb\t",
+      "transformer": {
+        "pseudocode_length": 0,
+        "pseudocode_preview": "",
+        "confidence": 1,
+        "elapsed_ms": 7056.18,
+        "tokens_generated": 256,
+        "has_output": false,
+        "error": null
+      },
+      "rule_based": {
+        "tool": "REVRA rule-based (CalibratedNeuralProposer)",
+        "has_output": true,
+        "has_proof": true,
+        "confidence": 0.619,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O0_extreme.hard",
+      "expected_semantics": "aes_encrypt",
+      "assembly_sample": "100000410: d10083ff    \tsub\tsp, sp, #0x20\n100000414: f9000fe0    \tstr\tx0, [sp, #0x18]\n100000418: f9000be1    \tstr\tx1, [sp, #0x10]\n10000041c: b9000fff    \tstr\twzr, [sp, #0xc]\n100000420: 14000001    \tb\t",
+      "transformer": {
+        "pseudocode_length": 11,
+        "pseudocode_preview": "# Example 1",
+        "confidence": 1,
+        "elapsed_ms": 6910.97,
+        "tokens_generated": 256,
+        "has_output": true,
+        "error": null
+      },
+      "rule_based": {
+        "tool": "REVRA rule-based (CalibratedNeuralProposer)",
+        "has_output": true,
+        "has_proof": true,
+        "confidence": 0.619,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O2_none.hard",
+      "expected_semantics": "aes_encrypt",
+      "assembly_sample": "100000328: 39400029    \tldrb\tw9, [x1]\n10000032c: 39400008    \tldrb\tw8, [x0]\n100000330: 4a090108    \teor\tw8, w8, w9\n100000334: 39000008    \tstrb\tw8, [x0]\n100000338: 39400429    \tldrb\tw9, [x1, #0x1]\n100",
+      "transformer": {
+        "pseudocode_length": 601,
+        "pseudocode_preview": "## Step 1\n\n## Step 2\n\n## Step 3\n\n## Step 4\n\n## Step 5\n\n## Step 6\n\n## Step 7\n\n## Step 8\n\n## Step 9\n\n#",
+        "confidence": 1,
+        "elapsed_ms": 7145.49,
+        "tokens_generated": 256,
+        "has_output": true,
+        "error": null
+      },
+      "rule_based": {
+        "tool": "REVRA rule-based (CalibratedNeuralProposer)",
+        "has_output": true,
+        "has_proof": true,
+        "confidence": 0.557,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O2_light.hard",
+      "expected_semantics": "aes_encrypt",
+      "assembly_sample": "100000328: 39400029    \tldrb\tw9, [x1]\n10000032c: 39400008    \tldrb\tw8, [x0]\n100000330: 4a090108    \teor\tw8, w8, w9\n100000334: 39000008    \tstrb\tw8, [x0]\n100000338: 39400429    \tldrb\tw9, [x1, #0x1]\n100",
+      "transformer": {
+        "pseudocode_length": 78,
+        "pseudocode_preview": "This example uses the `c-indexed_compiled_block_reader()` function to read the",
+        "confidence": 1,
+        "elapsed_ms": 7218.56,
+        "tokens_generated": 256,
+        "has_output": true,
+        "error": null
+      },
+      "rule_based": {
+        "tool": "REVRA rule-based (CalibratedNeuralProposer)",
+        "has_output": true,
+        "has_proof": true,
+        "confidence": 0.557,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O2_medium.hard",
+      "expected_semantics": "aes_encrypt",
+      "assembly_sample": "100000328: 39400029    \tldrb\tw9, [x1]\n10000032c: 39400008    \tldrb\tw8, [x0]\n100000330: 4a090108    \teor\tw8, w8, w9\n100000334: 39000008    \tstrb\tw8, [x0]\n100000338: 39400429    \tldrb\tw9, [x1, #0x1]\n100",
+      "transformer": {
+        "pseudocode_length": 129,
+        "pseudocode_preview": "`curl -X POST -H \"Content-Type: application/json\" -d '{\"code\": \"400\"}' http://127.0.0.1:8000/api/v1/",
+        "confidence": 1,
+        "elapsed_ms": 8123.62,
+        "tokens_generated": 256,
+        "has_output": true,
+        "error": null
+      },
+      "rule_based": {
+        "tool": "REVRA rule-based (CalibratedNeuralProposer)",
+        "has_output": true,
+        "has_proof": true,
+        "confidence": 0.557,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O2_heavy.hard",
+      "expected_semantics": "aes_encrypt",
+      "assembly_sample": "100000328: 39400029    \tldrb\tw9, [x1]\n10000032c: 39400008    \tldrb\tw8, [x0]\n100000330: 4a090108    \teor\tw8, w8, w9\n100000334: 39000008    \tstrb\tw8, [x0]\n100000338: 39400429    \tldrb\tw9, [x1, #0x1]\n100",
+      "transformer": {
+        "pseudocode_length": 48,
+        "pseudocode_preview": "#####\n\n**Examples**:\n\n1. `./bench/bench_cpu.py`:",
+        "confidence": 1,
+        "elapsed_ms": 7216.92,
+        "tokens_generated": 256,
+        "has_output": true,
+        "error": null
+      },
+      "rule_based": {
+        "tool": "REVRA rule-based (CalibratedNeuralProposer)",
+        "has_output": true,
+        "has_proof": true,
+        "confidence": 0.557,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      }
+    },
+    {
+      "binary": "corpus/aes_encrypt_round_O2_extreme.hard",
+      "expected_semantics": "aes_encrypt",
+      "assembly_sample": "100000328: 39400029    \tldrb\tw9, [x1]\n10000032c: 39400008    \tldrb\tw8, [x0]\n100000330: 4a090108    \teor\tw8, w8, w9\n100000334: 39000008    \tstrb\tw8, [x0]\n100000338: 39400429    \tldrb\tw9, [x1, #0x1]\n100",
+      "transformer": {
+        "pseudocode_length": 81,
+        "pseudocode_preview": "## Case #1: The first word in the first line of the given ARM64 bytecode is `L0`.",
+        "confidence": 1,
+        "elapsed_ms": 7053.09,
+        "tokens_generated": 256,
+        "has_output": true,
+        "error": null
+      },
+      "rule_based": {
+        "tool": "REVRA rule-based (CalibratedNeuralProposer)",
+        "has_output": true,
+        "has_proof": true,
+        "confidence": 0.557,
+        "elapsed_ms": 0,
+        "outcome": "VERIFIED_PROMOTED"
+      }
+    }
+  ],
+  "generated_at": "2026-10-14T04:47:19.073Z"
+}

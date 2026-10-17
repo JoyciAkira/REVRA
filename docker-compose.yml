@@ -1,0 +1,30 @@
+# REVRA — piattaforma completa con `docker compose up`
+# API (NestJS + SQLite persistente su volume) + Web (nginx: static + proxy API)
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    environment:
+      - REVRA_DB=/data/revra.db
+      - PORT=3000
+      # IMPERATIVO in produzione: impostare un secret lungo e casuale
+      - REVRA_JWT_SECRET=${REVRA_JWT_SECRET:-dev-only-secret-change-me}
+    volumes:
+      - revra-data:/data
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+volumes:
+  revra-data:

@@ -1,0 +1,14 @@
+# REVRA judge image — the re-executability judge (gcc 11 / ubuntu 22.04).
+# CALIBRATED: compilation results must not drift with image changes.
+# Build (from packages/revra-verify/engine/): docker build -t revra-judge:0.1.0 -f Dockerfile.judge .
+FROM --platform=linux/amd64 ubuntu:22.04
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      g++ gcc libc6-dev libboost-dev libssl-dev python3 python3-pip binutils \
+    && rm -rf /var/lib/apt/lists/* \
+    && pip3 install --no-cache-dir tqdm numpy
+
+COPY cal_execute_rate.py /opt/judge/cal_execute_rate.py
+ENV PYTHONPATH=/opt/judge
+WORKDIR /work
+CMD ["sleep", "infinity"]

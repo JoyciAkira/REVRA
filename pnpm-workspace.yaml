@@ -1,0 +1,5 @@
+packages:
+  - packages/*
+  - '!packages/revra-verify'
+allowBuilds:
+  esbuild: true
