@@ -1,0 +1,16 @@
+{
+  "name": "revra-verify",
+  "version": "0.1.0",
+  "description": "REVRA — verified reverse engineering: multi-engine decompilation (Ghidra, RetDec), agentic repair with your own model, evidence reports with full provenance.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "bin": { "revra": "bin/revra.mjs" },
+  "files": [
+    "bin/", "mcp/", "engine/revra_verify.py", "engine/llm_adapter.py",
+    "engine/ghidra_scripts/", "engine/Dockerfile.engine", "engine/Dockerfile.judge",
+    "engine/setup_assets.sh", "README.md"
+  ],
+  "engines": { "node": ">=18" },
+  "repository": { "type": "git", "url": "git+https://github.com/JoyciAkira/REVRA.git" },
+  "keywords": ["reverse-engineering", "decompiler", "mcp", "ghidra", "retdec", "verification"]
+}

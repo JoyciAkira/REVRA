@@ -1,0 +1,15 @@
+export { EvidenceKernel } from './kernel.js';
+export { KernelRuleError } from './errors.js';
+export type { CertificateInput, ProofVerifier, VerifierOutcome, VerifierRun } from './verifier/types.js';
+export { certificateInputSchema } from './verifier/types.js';
+export { Lean4CliVerifier } from './verifier/lean4-cli.js';
+export { ProofCache } from './verifier/proof-cache.js';
+export { SqliteStateStore } from './persistence/sqlite.js';
+export { kernelSnapshotSchema } from './persistence/types.js';
+export { AtomicSemanticsRegistry, ATOMIC_SEMANTICS } from './verifier/atomic-semantics-registry.js';
+export type { AtomicSemantics, AtomLicense } from './verifier/atomic-semantics-registry.js';
+export { AtomicEvidenceComposer, ATOMIC_STALE_STATUS } from './verifier/atomic-evidence-composer.js';
+export type { AtomicProofBinding, AtomicCompositionResult, AtomicStaleStatus } from './verifier/atomic-evidence-composer.js';
+export { AtomicReconciler } from './verifier/atomic-reconciler.js';
+export type { InstructionClaim, AtomicDispute, AtomicReconciliationResult, ReconciliationVerdict } from './verifier/atomic-reconciler.js';
+export type { KernelSnapshot } from './persistence/types.js';

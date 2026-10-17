@@ -1,0 +1,51 @@
+{
+ "symbol": "func0",
+ "final": "#include <vector>\n#include <cmath>\n\nbool func0(std::vector<float> numbers, float threshold) {\n    for (size_t i = 0; i < numbers.size(); ++i) {\n        for (size_t j = i + 1; j < numbers.size(); ++j) {\n            if (std::abs(numbers[i] - numbers[j]) < threshold) {\n                return true;\n            }\n        }\n    }\n    return false;\n}",
+ "compiles": true,
+ "passes": true,
+ "evidence": [
+  {
+   "step": "input",
+   "sha256": "037e98146806716ba3139c1bf1fa11189c41398eda2475251947709e7530a48a",
+   "symbol": "func0",
+   "demangled": "func0(std::vector<float, std::allocator<float> >, float)",
+   "language": "cpp",
+   "model": "claude-sonnet-5"
+  },
+  {
+   "step": "draft",
+   "engine": "ghidra-11.3.2",
+   "chars": 908
+  },
+  {
+   "step": "draft",
+   "engine": "retdec-5.0",
+   "chars": 4950
+  },
+  {
+   "round": 0,
+   "attempt": "draft-best",
+   "compiles": false,
+   "runs": false
+  },
+  {
+   "round": 1,
+   "attempt": "repair",
+   "model": "claude-sonnet-5",
+   "compiles": false,
+   "runs": false
+  },
+  {
+   "round": 2,
+   "attempt": "repair",
+   "model": "claude-sonnet-5",
+   "compiles": true,
+   "runs": true
+  },
+  {
+   "step": "final",
+   "compiles": true,
+   "runs": true
+  }
+ ]
+}

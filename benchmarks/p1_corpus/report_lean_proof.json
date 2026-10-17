@@ -1,0 +1,35 @@
+{
+  "benchmark": "Gap 1 — Proof Lean Formale Full-Function (non strutturale)",
+  "contract": "ANTI-GAMING: proof formale Lean 4 end-to-end. Se < 95%, miglioriamo generatore proof, non la soglia.",
+  "corpus": {
+    "total_binaries": 735,
+    "unique_functions": 49,
+    "arch": "arm64 (Mach-O)",
+    "strip": "llvm-strip --strip-all",
+    "obfuscation": "LLVM IR pass-based"
+  },
+  "verifier": {
+    "name": "lean4",
+    "version": "4.35.0",
+    "type": "Lean 4 CLI (formal proof checker, not structural)"
+  },
+  "results_summary": {
+    "unique_verified": 49,
+    "unique_failed": 0,
+    "unique_timeout": 0,
+    "unique_unavailable": 0,
+    "proof_coverage_unique": 1,
+    "binaries_with_formal_proof": 735,
+    "binary_coverage": 1,
+    "gate_threshold": 0.95,
+    "gate_passed": true
+  },
+  "comparison_vs_sota": {
+    "foxdec_ccs2024": "93.75% (15/16 binari) ma solo BASIC-BLOCK level, non full-function",
+    "revra_gap1": "100.0% (49/49 funzioni) FULL-FUNCTION level su 735 binari",
+    "advantage": "REVRA estende FoxDec da basic-block a full-function e da 16 a 735+ binari"
+  },
+  "verdict": "PASS: REVRA 100.0% proof coverage formale Lean 4 full-function (>= 95%). Supera FoxDec (basic-block only).",
+  "failures_sample": [],
+  "generated_at": "2026-10-14T04:39:59.010Z"
+}

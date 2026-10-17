@@ -1,0 +1,31 @@
+# REVRA engine image: Ghidra 11.3.2 headless + RetDec 5.0 (MIT/Apache).
+# The re-executability judge lives in the SEPARATE calibrated image `revra-judge:0.1.0`
+# (gcc 11 / ubuntu 22.04) — compilation results must not drift with engine changes.
+#
+# Build (from packages/revra-verify/engine/, after ./setup_assets.sh):
+#   docker build --platform linux/amd64 -t revra-engine:0.1.0 -f Dockerfile.engine .
+FROM --platform=linux/amd64 ubuntu:24.04
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      openjdk-21-jdk-headless python3 curl ca-certificates binutils file unzip xz-utils \
+    && rm -rf /var/lib/apt/lists/*
+ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+
+# Ghidra 11.3.2 (SHA-256 pinned by setup_assets.sh)
+COPY assets/ghidra_11.3.2_linux.zip /tmp/ghidra.zip
+RUN mkdir -p /opt/ghidra && cd /opt/ghidra && unzip -q /tmp/ghidra.zip && \
+    mv ghidra_*/* . && rmdir ghidra_* && rm /tmp/ghidra.zip
+ENV GHIDRA_HOME=/opt/ghidra
+ENV PATH="$GHIDRA_HOME/support:$PATH"
+
+# RetDec 5.0 (MIT)
+COPY assets/retdec-linux.tar.xz /tmp/retdec.tar.xz
+RUN mkdir -p /opt/retdec && cd /opt/retdec && tar -xf /tmp/retdec.tar.xz && rm /tmp/retdec.tar.xz
+ENV PATH="/opt/retdec/bin:$PATH"
+
+# Ghidra post-script
+COPY ghidra_scripts/decompile_at.py /opt/revra-scripts/decompile_at.py
+ENV REVRA_SCRIPTS=/opt/revra-scripts
+
+WORKDIR /work
+CMD ["sleep", "infinity"]

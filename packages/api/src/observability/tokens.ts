@@ -1,0 +1,1 @@
+export const METRICS_REGISTRY = Symbol('METRICS_REGISTRY');
